@@ -1,5 +1,5 @@
 # SDL game
-
+[![Build Status](https://github.com/LonelyDriver/SDL_Game/workflows/CI/badge.svg)](https://github.com/LonelyDriver/SDL_Game/actions)
 ## Build on Linux
 
     mkdir build
