@@ -29,11 +29,6 @@ jobs:
           gcc --version
         
       - name: build the game
-        build-dir: ${{runner.workspace}}/build
-        cc: gcc
-        cxx: g++
-        build-type: release
-
         run: |
           mkdir build
           cd build
