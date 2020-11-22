@@ -24,10 +24,20 @@ jobs:
       - name: install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -qq libsdl2-dev
+          sudo apt-get install -qq libsdl2-dev cmake
+          cmake --version
+          gcc --version
         
       - name: build the game
+        build-dir: ${{runner.workspace}}/build
+        cc: gcc
+        cxx: g++
+        build-type: release
+
         run: |
+          mkdir build
+          cd build
+          cmake ..
           make
         env:
           CC: gcc
