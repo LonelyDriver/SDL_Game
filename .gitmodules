@@ -1,0 +1,6 @@
+[submodule "Vector"]
+	path = Vector
+	url = https://github.com/LonelyDriver/Vector.git
+[submodule "Logging"]
+	path = Logging
+	url = https://github.com/LonelyDriver/Logging.git
