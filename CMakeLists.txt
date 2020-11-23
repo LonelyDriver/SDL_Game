@@ -11,10 +11,17 @@ endif()
 
 find_package(Threads)
 
+add_subdirectory(Vector)
+add_subdirectory(Logging)
+
 if(MSVC)
 find_package(SDL2)
 endif()
 
-add_executable(sdl_game examples/sdl_game_example.cpp)
+add_library(sdl_game SHARED src/sdl_game_main)
 target_include_directories(sdl_game PRIVATE include)
-target_link_libraries(sdl_game SDL2)
+target_link_libraries(sdl_game SDL2 vector logger)
+
+add_executable(sdl_game_exe examples/sdl_game_example.cpp)
+target_include_directories(sdl_game_exe PRIVATE include)
+target_link_libraries(sdl_game_exe sdl_game logger)
