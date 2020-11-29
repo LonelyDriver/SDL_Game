@@ -4,15 +4,21 @@ sdlgame::Main::Main() :
 m_window(nullptr),
 m_renderer(nullptr),
 m_logging(),
-m_running(false){
+m_running(false),
+m_tex_manager(),
+m_objects(),
+m_input_handler(){
      LogManager::RegisterLogger("Main", std::make_shared<logger::ConsoleLogger>());
+     LogManager::RegisterLogger("TextureManager", std::make_shared<logger::ConsoleLogger>());
+     LogManager::RegisterLogger("InputHandler", std::make_shared<logger::ConsoleLogger>());
      m_logging = LogManager::GetLogger("Main");
 }
 
 sdlgame::Main::~Main(){
+    m_logging->Debug("Shutting down");
     SDL_DestroyWindow(m_window);
     SDL_Quit();
-    m_logging->Debug("Shutting down");
+    delete m_tex_manager;
 }
 
 void sdlgame::Main::Init(const std::string& name, const Vec& window_pos, const Vec& window_size){
@@ -30,21 +36,30 @@ void sdlgame::Main::Init(const std::string& name, const Vec& window_pos, const V
     SDL_SetRenderDrawColor(m_renderer, 0,0,0,SDL_ALPHA_OPAQUE);
     SDL_RenderClear(m_renderer);
     SDL_RenderPresent(m_renderer);
+
+    m_tex_manager = new TextureManager(m_renderer, LogManager::GetLogger("TextureManager"));
+    m_logging->Debug("TextureManager created");
+    m_input_handler = new InputHandler(LogManager::GetLogger("InputHandler"));
+
+    GameObjectDto d = {Vec(100,100),Vec{0,0},Vec(0,0), Vec(100,100)};
+    //m_objects.emplace_back(GameObjectDto{Vec(100,100),Vec{0,0},Vec(0,0), Vec(100,100), {0xFF,0x00,0x00,0x00}});
+    m_logging->Debug(STREAM("Pos: "<<d.Pos.GetX()<<","<<d.Pos.GetY()));
+    m_logging->Debug(STREAM("Size: "<<d.Size.GetX()<<","<<d.Size.GetY()));
+    m_objects.push_back(d);
+    m_logging->Debug("Object created");
 }
 void sdlgame::Main::Update(){
-    m_logging->Debug("Update");
+    const auto mouse_pos = m_input_handler->GetMousePos();
+    m_logging->Debug(STREAM("Mouse pos: "<<mouse_pos.GetX()<<","<< mouse_pos.GetY()));
 }
 void sdlgame::Main::HandleEvents(){
-    m_logging->Debug("HandleEvents");
-    SDL_Event e;
-    while(SDL_PollEvent(&e) != 0){
-        if(e.type == SDL_QUIT){
-            m_running = false;
-        }
-    }   
+    m_running = m_input_handler->Update();  
 }
 void sdlgame::Main::Render(){
-    m_logging->Debug("Render");
+    for(const auto obj : m_objects){
+        m_tex_manager->RenderRect(obj);
+    }
+    SDL_RenderPresent(m_renderer);
 }
 
 void sdlgame::Main::Running(bool running){

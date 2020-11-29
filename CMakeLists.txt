@@ -18,9 +18,11 @@ if(MSVC)
 find_package(SDL2)
 endif()
 
-add_library(sdl_game SHARED src/sdl_game_main)
+add_library(sdl_game SHARED src/sdl_game_main.cpp
+                            src/sdl_game_texture_manager.cpp
+                            src/sdl_game_input_handler.cpp)
 target_include_directories(sdl_game PRIVATE include)
-target_link_libraries(sdl_game SDL2 vector logger)
+target_link_libraries(sdl_game SDL2 SDL2_image vector logger)
 
 add_executable(sdl_game_exe examples/sdl_game_example.cpp)
 target_include_directories(sdl_game_exe PRIVATE include)

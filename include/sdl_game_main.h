@@ -1,9 +1,12 @@
 #pragma once
 #include <string>
+#include <vector>
 
 #include <SDL2/SDL.h>
 #include "vector2d.h"
 #include "logging_manager.h"
+#include "sdl_game_texture_manager.h"
+#include "sdl_game_input_handler.h"
 
 using Vec = vector::Vector2D;
 namespace sdlgame{
@@ -26,5 +29,8 @@ namespace sdlgame{
         SDL_Renderer* m_renderer;
         Logger m_logging;
         bool m_running;
+        TextureManager* m_tex_manager;
+        std::vector<GameObjectDto> m_objects;
+        InputHandler* m_input_handler;
     };
 }
