@@ -42,22 +42,30 @@ void sdlgame::Main::Init(const std::string& name, const Vec& window_pos, const V
     m_input_handler = new InputHandler(LogManager::GetLogger("InputHandler"));
 
     GameObjectDto d = {Vec(100,100),Vec{0,0},Vec(0,0), Vec(100,100)};
-    //m_objects.emplace_back(GameObjectDto{Vec(100,100),Vec{0,0},Vec(0,0), Vec(100,100), {0xFF,0x00,0x00,0x00}});
-    m_logging->Debug(STREAM("Pos: "<<d.Pos.GetX()<<","<<d.Pos.GetY()));
-    m_logging->Debug(STREAM("Size: "<<d.Size.GetX()<<","<<d.Size.GetY()));
-    m_objects.push_back(d);
-    m_logging->Debug("Object created");
+    Player p{d, LogManager::GetLogger("Player")};
+    m_objects.push_back(p);
 }
+
 void sdlgame::Main::Update(){
-    const auto mouse_pos = m_input_handler->GetMousePos();
-    m_logging->Debug(STREAM("Mouse pos: "<<mouse_pos.GetX()<<","<< mouse_pos.GetY()));
+    const auto& mouse_pos = m_input_handler->GetMousePos();
+    
+    for(auto& obj : m_objects){
+        obj.Update(m_input_handler);
+    }
 }
+
 void sdlgame::Main::HandleEvents(){
     m_running = m_input_handler->Update();  
+    if(m_input_handler->IsKeyDown(SDL_SCANCODE_ESCAPE)){
+        m_running = false;
+    }
 }
+
 void sdlgame::Main::Render(){
+
+    SDL_RenderClear(m_renderer);
     for(const auto obj : m_objects){
-        m_tex_manager->RenderRect(obj);
+        obj.Render(m_tex_manager);
     }
     SDL_RenderPresent(m_renderer);
 }

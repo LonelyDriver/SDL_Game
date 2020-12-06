@@ -41,10 +41,17 @@ bool sdlgame::InputHandler::Update() {
  * 
  * @return Vec& 
  */
-Vec sdlgame::InputHandler::GetMousePos() const{
+Vec sdlgame::InputHandler::GetMousePos() const {
     return m_mouse_pos;
 }
 
+bool sdlgame::InputHandler::IsKeyDown(SDL_Scancode key) const{
+    if(!m_key_states){
+        return false;
+    }
+
+    return m_key_states[key] == 1;
+}
 
 
 /**

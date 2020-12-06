@@ -14,7 +14,7 @@ namespace sdlgame {
 
         bool Load(const std::string& filename, const std::string& id);
         void Render(const std::string& id, const GameObjectDto& obj, SDL_RendererFlip flip=SDL_FLIP_NONE);
-        void RenderRect(const GameObjectDto& obj);
+        void RenderRect(const GameObjectDto& obj) const;
 
     private:
         SDL_Renderer* m_renderer;

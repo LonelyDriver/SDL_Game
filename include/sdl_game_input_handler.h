@@ -20,8 +20,8 @@ namespace sdlgame {
 
         bool Update();
         Vec GetMousePos() const;
-        bool GetMouseButtonState(int button_number);
-        bool IsKeyDown(SDL_Scancode key);
+        bool GetMouseButtonState(int button_number) const;
+        bool IsKeyDown(SDL_Scancode key) const;
     private:
         Logger m_logger;
         Vec m_mouse_pos;

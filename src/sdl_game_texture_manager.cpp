@@ -41,7 +41,7 @@ void sdlgame::TextureManager::Render(const std::string& id, const GameObjectDto&
     SDL_RenderCopyEx(m_renderer, m_textures.at(id), &src_rect, &dest_rect, 0, 0, flip);
 }
 
-void sdlgame::TextureManager::RenderRect(const GameObjectDto& obj){
+void sdlgame::TextureManager::RenderRect(const GameObjectDto& obj) const{
     SDL_Rect rect;
     rect.x = obj.Pos.GetX();
     rect.y = obj.Pos.GetY();
@@ -50,4 +50,5 @@ void sdlgame::TextureManager::RenderRect(const GameObjectDto& obj){
 
     SDL_SetRenderDrawColor(m_renderer, 0xFF, 0x00, 0x00, 0x00);
     SDL_RenderDrawRect(m_renderer, &rect);
+    SDL_SetRenderDrawColor(m_renderer, 0x00, 0x00, 0x00, 0xFF);
 }
