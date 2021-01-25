@@ -1,7 +1,7 @@
 #include "sdl_game_texture_manager.h"
 #include "SDL2/SDL_image.h"
 
-sdlgame::TextureManager::TextureManager(SDL_Renderer* renderer, Logger logger) :
+sdlgame::TextureManager::TextureManager(std::shared_ptr<SDL_Renderer> renderer, Logger logger) :
     m_renderer(renderer),
     m_textures(),
     m_logger(logger){
@@ -17,7 +17,7 @@ bool sdlgame::TextureManager::Load(const std::string& filename, const std::strin
         return false;
     }
     // create texture from surface pixels
-    texture = SDL_CreateTextureFromSurface(m_renderer, surface);
+    texture = SDL_CreateTextureFromSurface(m_renderer.get(), surface);
     if(texture == NULL){
         m_logger->Warn(STREAM("Could not create texture from surface, SDL Error: "<<SDL_GetError()));
         return false;
@@ -38,7 +38,7 @@ void sdlgame::TextureManager::Render(const std::string& id, const GameObjectDto&
     dest_rect.x = obj.Pos.GetX();
     dest_rect.y = obj.Pos.GetY();
 
-    SDL_RenderCopyEx(m_renderer, m_textures.at(id), &src_rect, &dest_rect, 0, 0, flip);
+    SDL_RenderCopyEx(m_renderer.get(), m_textures.at(id), &src_rect, &dest_rect, 0, 0, flip);
 }
 
 void sdlgame::TextureManager::RenderRect(const GameObjectDto& obj) const{
@@ -48,7 +48,7 @@ void sdlgame::TextureManager::RenderRect(const GameObjectDto& obj) const{
     rect.w = obj.Size.GetX();
     rect.h = obj.Size.GetY();
 
-    SDL_SetRenderDrawColor(m_renderer, 0xFF, 0x00, 0x00, 0x00);
-    SDL_RenderDrawRect(m_renderer, &rect);
-    SDL_SetRenderDrawColor(m_renderer, 0x00, 0x00, 0x00, 0xFF);
+    SDL_SetRenderDrawColor(m_renderer.get(), 0xFF, 0x00, 0x00, 0x00);
+    SDL_RenderDrawRect(m_renderer.get(), &rect);
+    SDL_SetRenderDrawColor(m_renderer.get(), 0x00, 0x00, 0x00, 0xFF);
 }

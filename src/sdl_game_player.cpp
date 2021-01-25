@@ -6,10 +6,10 @@ GameObject(params, logging){
     m_params.Vel = Vec(0,0);
 }
 
-void sdlgame::Player::Render(const TextureManager* texture_manager) const{
+void sdlgame::Player::Render(const TextureManagerPtr texture_manager) const{
     GameObject::Render(texture_manager);
 }
-void sdlgame::Player::Update(const InputHandler* input_handler){
+void sdlgame::Player::Update(const InputHandlerPtr input_handler){
     auto direction = input_handler->GetMousePos() - m_params.Pos;
     direction.Normalize();
     direction *= 5;

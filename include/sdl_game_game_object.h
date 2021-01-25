@@ -9,8 +9,8 @@ namespace sdlgame {
     public:
         GameObject(const GameObjectDto& params, Logger logging);
         virtual ~GameObject(){}
-        virtual void Render(const TextureManager* texture_manager) const;
-        virtual void Update(const InputHandler* input_handler);
+        virtual void Render(const TextureManagerPtr texture_manager) const;
+        virtual void Update(const InputHandlerPtr input_handler);
 
     protected:
         GameObjectDto m_params;

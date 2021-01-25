@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <memory>
 
 #include <SDL2/SDL.h>
 #include "vector2d.h"
@@ -26,12 +27,19 @@ namespace sdlgame{
         void Run();
 
     private:
-        SDL_Window* m_window;
-        SDL_Renderer* m_renderer;
+        std::shared_ptr<SDL_Window> m_window;
+        std::shared_ptr<SDL_Renderer> m_renderer;
+        TextureManagerPtr m_tex_manager;
+        InputHandlerPtr m_input_handler;
+
         Logger m_logging;
         bool m_running;
-        TextureManager* m_tex_manager;
         std::vector<Player> m_objects;
+        /*
+        SDL_Window* m_window;
+        SDL_Renderer* m_renderer;
+        TextureManager* m_tex_manager;
         InputHandler* m_input_handler;
+        */
     };
 }

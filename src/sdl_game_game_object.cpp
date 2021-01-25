@@ -7,11 +7,11 @@ m_logging(logging)
 
 }
 
-void sdlgame::GameObject::Render(const sdlgame::TextureManager* texture_manager) const{
+void sdlgame::GameObject::Render(const TextureManagerPtr texture_manager) const{
     texture_manager->RenderRect(m_params);
 }
 
-void sdlgame::GameObject::Update(const InputHandler* input_handler) {
+void sdlgame::GameObject::Update(const InputHandlerPtr input_handler) {
     if(input_handler->IsKeyDown(SDL_SCANCODE_1)){
         m_logging->Info(" ");
     }

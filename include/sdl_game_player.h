@@ -8,16 +8,9 @@ namespace sdlgame {
     class Player : public GameObject{
     public:
         Player(const GameObjectDto& params, Logger logging);
-        /*Player(const Player& other) : GameObject({
-            *this = other;
-        }
-        Player operator=(const Player& other){
-            m_params = other.m_params;
-            m_logging = other.m_logging;
-        }*/
 
-        void Render(const TextureManager* texture_manager) const override;
-        void Update(const InputHandler* input_handler) override;
+        void Render(const TextureManagerPtr texture_manager) const override;
+        void Update(const InputHandlerPtr input_handler) override;
     };
 }
 

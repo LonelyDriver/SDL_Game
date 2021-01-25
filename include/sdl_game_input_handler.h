@@ -1,6 +1,7 @@
 #ifndef INPUT_HANDLER_HPP
 #define INPUT_HANDLER_HPP
 #include <vector>
+#include <memory>
 #include "logger_interface.h"
 #include "vector2d.h"
 #include "SDL2/SDL.h"
@@ -35,5 +36,6 @@ namespace sdlgame {
     };
 } // namespace sdlgame
 
+using InputHandlerPtr = std::shared_ptr<sdlgame::InputHandler>;
 
 #endif
