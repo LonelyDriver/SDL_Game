@@ -23,15 +23,7 @@ sdlgame::Main::~Main(){
 
 void sdlgame::Main::Init(const std::string& name, const Vec& window_pos, const Vec& window_size){
     SDL_Init(SDL_INIT_VIDEO);
-    /*
-     m_window = SDL_CreateWindow(
-        name.c_str(),
-        window_pos.GetX(),
-        window_pos.GetY(),
-        window_size.GetX(),
-        window_size.GetY(),
-        0
-    ); */
+    
     m_window = std::shared_ptr<SDL_Window>(SDL_CreateWindow(
         name.c_str(), 
         window_pos.GetX(),
@@ -45,7 +37,6 @@ void sdlgame::Main::Init(const std::string& name, const Vec& window_pos, const V
         -1,
         SDL_RENDERER_SOFTWARE), SDL_DestroyRenderer);
 
-    //m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_SOFTWARE);
     SDL_SetRenderDrawColor(m_renderer.get(), 0,0,0,SDL_ALPHA_OPAQUE);
     SDL_RenderClear(m_renderer.get());
     SDL_RenderPresent(m_renderer.get());
@@ -55,10 +46,8 @@ void sdlgame::Main::Init(const std::string& name, const Vec& window_pos, const V
         LogManager::GetLogger("TextureManager")
     );
 
-    //m_tex_manager = new TextureManager(m_renderer, LogManager::GetLogger("TextureManager"));
     m_logging->Debug("TextureManager created");
     m_input_handler = std::make_shared<InputHandler>(LogManager::GetLogger("InputHander"));
-    //m_input_handler = new InputHandler(LogManager::GetLogger("InputHandler"));
 
     GameObjectDto d = {Vec(100,100),Vec{0,0},Vec(0,0), Vec(100,100)};
     Player p{d, LogManager::GetLogger("Player")};

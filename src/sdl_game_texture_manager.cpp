@@ -8,16 +8,21 @@ sdlgame::TextureManager::TextureManager(std::shared_ptr<SDL_Renderer> renderer, 
 
     }
 
-bool sdlgame::TextureManager::Load(const std::string& filename, const std::string& id){
-    SDL_Texture* texture = nullptr;
+sdlgame::TextureManager::~TextureManager() {
+    for(const auto texture : m_textures) {
+        free(texture.second);
+    }
+}
 
+bool sdlgame::TextureManager::Load(const std::string& filename, const std::string& id){
     SDL_Surface* surface = IMG_Load(filename.c_str());
     if(surface == NULL){
         m_logger->Warn(std::string("Could not load file <"+filename+">, SDL Error: "+IMG_GetError()));
         return false;
     }
     // create texture from surface pixels
-    texture = SDL_CreateTextureFromSurface(m_renderer.get(), surface);
+    const auto texture = SDL_CreateTextureFromSurface(m_renderer.get(), surface);
+
     if(texture == NULL){
         m_logger->Warn(STREAM("Could not create texture from surface, SDL Error: "<<SDL_GetError()));
         return false;

@@ -12,6 +12,9 @@ namespace sdlgame {
     class TextureManager{
     public:
         TextureManager(std::shared_ptr<SDL_Renderer> renderer, Logger logger);
+        TextureManager(const TextureManager& other) = delete;
+        TextureManager operator=(const TextureManager& other) = delete;
+        ~TextureManager();
 
         bool Load(const std::string& filename, const std::string& id);
         void Render(const std::string& id, const GameObjectDto& obj, SDL_RendererFlip flip=SDL_FLIP_NONE);
@@ -19,7 +22,6 @@ namespace sdlgame {
 
     private:
         std::shared_ptr<SDL_Renderer> m_renderer;
-        //SDL_Renderer* m_renderer;
         std::unordered_map<std::string, SDL_Texture*> m_textures;
         Logger m_logger;
     };
